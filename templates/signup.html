@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elawad - Signup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+            background-image: url("{% static 'images/logo2.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ff4081;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between; /* Change to space-between */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            margin: 0 10px; /* Adjust as needed */
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #ff4081;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #ff4081;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .messages li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: #fff;">Elawad Dating App</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'home' %}" style="color: #fff;">Welcome page</a>
+        <a href="{% url 'login' %}" style="color: #fff;">Login</a>
+    </nav>
+
+    <div class="container">
+        {% if confirmation_message %}
+            <div style="background-color: #dff0d8; border: 1px solid #3c763d; color: #3c763d; padding: 10px; border-radius: 3px; margin-bottom: 10px;">
+                {{ confirmation_message }}
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h1>Signup</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+            
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+            
+            <label for="id_password2">Confirm Password:</label>
+            {{ form.password2 }}
+
+            <button type="submit">Signup</button>
+            <a href="{% url 'login' %}">Already have an account?</a>
+        </form>
+    </div>
+
+    <footer>
+        <p style="color: #fff;">&copy; 2023 Elawad Dating App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

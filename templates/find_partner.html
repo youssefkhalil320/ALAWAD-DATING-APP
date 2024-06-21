@@ -1,0 +1,331 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elawad - Dating App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+            background-image: url("{% static 'images/logo2.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ff4081;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            text-align: left;
+        }
+
+        button {
+            background-color: #ff4081;
+            color: #fff;
+            padding: 10px;  /* Adjusted padding for the button */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d33866;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            flex: 1 0 48%; /* Adjusted width of the checkboxes to fit better */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkbox-group label:hover {
+            background-color: #e6e6e6;
+        }
+
+        .checkbox-group input:checked + label {
+            background-color: #66bb6a;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: #fff;
+        }
+
+        .form-group input
+        {
+            width: 7rem;
+            height: 2rem;
+        }
+
+        .form-group select
+        {
+            width: 7rem;
+            height:2rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: #fff;">Elawad Dating App</h1>
+        {% if user_name %}
+            <div class="welcome-message">Welcome, {{ user_name }}! <a href="{% url 'login' %}" style="color: #fff;">Logout</a></div>
+        {% endif %}
+    </header>
+
+    <nav>
+        {% if user_name %}
+            <!-- Show logout link if the user is logged in -->
+            <a href="{% url 'profile' user_name=user_name%}" style="color: #fff;">profile</a>
+        {% else %}
+            <!-- Your existing login and signup links -->
+            <a href="{% url 'login' %}" style="color: #fff;">Login</a>
+            <a href="{% url 'signup' %}" style="color: #fff;">Signup</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to Elawad Dating App</h1>
+        {% if user_name %}
+            <form method="post" action="{% url 'find_partner' user_name=user_name %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="SKIN_COLOR">Skin Color:</label>
+                    <select id="SKIN_COLOR" name="SKIN_COLOR" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="light">Light</option>
+                        <option value="medium">Medium</option>
+                        <option value="fair">Fair</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="HEIGHT">minimum height:</label>
+                    <input type="number" id="HEIGHT" name="HEIGHT" placeholder="Enter height in cm" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="WEIGHT">maximum weight:</label>
+                    <input type="number" id="WEIGHT" name="WEIGHT" placeholder="Enter weight in kg" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="EYE_COLOR">Eye Color:</label>
+                    <select id="EYE_COLOR" name="EYE_COLOR" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="brown">Brown</option>
+                        <option value="light brown">Light Brown</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="black">Black</option>
+                        <option value="grey">Grey</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="characteristic_5">Hair Color</label>
+                    <select id="HAIR_COLOR" name="HAIR_COLOR" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="brown">brown</option>
+                        <option value="blond">blond</option>
+                        <option value="Red">Red</option>
+                        <option value="Golden brown ">Golden brown </option>
+                        <option value="ginger">ginger</option>
+                        <option value="dark brown">dark brown</option>
+                        <option value="Brownish Black">Brownish Black</option>
+                        <option value="Light brown">Light brown</option>
+                        <option value="Dark brown">Dark brown</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="characteristic_7">Hair Type</label>
+                    <select id="HAIR_TYPE" name="HAIR_TYPE" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="straight">straight</option>
+                        <option value="curly">curly</option>
+                        <option value="wavy">wavy</option>
+                        <option value="coily">coily</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="characteristic_7">Hair LENGTH</label>
+                    <select id="HAIR_LENGTH" name="HAIR_LENGTH" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="long">long</option>
+                        <option value="short">short</option>
+                        <option value="medium">medium</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="characteristic_8">Mustache</label>
+                    <select id="Mustache" name="Mustache" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="characteristic_9">Beard</label>
+                    <select id="Beard" name="Beard" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="characteristic_10">Eye Glasses</label>
+                    <select id="Eye_Glasses" name="Eye_Glasses" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="Y">Yes</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                <label for="hijab_type">Hijab Type:</label>
+                <select id="hijab_type" name="hijab_type" required>
+                    <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                    <option value="nonhijabi">nonhijabi</option>
+                    <option value="hijabi">hijabi</option>
+                    <option value="montakeba">montakeba</option>
+                    <option value="male">mala</option>
+                 </select>
+                </div>
+
+                <div class="form-group">
+                <label for="fashion_style">Fashion Style:</label>
+                <select id="fashion_style" name="fashion_style" required>
+                    <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                    <option value="casual">casual</option>
+                    <option value="old money">old money</option>
+                    <option value="classic">classic</option>
+                    <option value="gothic">gothic</option>
+                 </select>
+                </div>
+
+                <div class="form-group">
+                <label for="min_income">Minimum income:</label>
+                <input type="number" id="min_income" name="min_income" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="religion">Religion:</label>
+                    <select class="religion" id="religion" name="religion" required>
+                        <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                        <option value="2">Christianity</option>
+                        <option value="1">Islam</option>
+                        <option value="3">Judaism</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            {% if partner_list %}
+                <h2>Search Results:</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Income</th>
+                            <th>Marriages Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for partner in partner_list %}
+                            <tr>
+                                <td>{{ partner.first_name }}</td>
+                                <td>{{ partner.last_name }}</td>
+                                <td>{{ partner.income }}</td>
+                                <td>{{ partner.marriages_count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% elif user_name %}
+                <p>No matching partners found.</p>
+            {% endif %}
+        {% endif %}
+    </div>    
+    
+    <footer>
+        <p>&copy; 2023 Elawad Dating App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elawad - Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+            background-image: url("{% static 'images/logo2.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+    background-color: #ff4081;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around; /* Adjust as needed */
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Adjust margins as needed */
+nav a:first-child {
+    margin-right: 10px;
+}
+
+nav a:last-child {
+    margin-left: 10px;
+}
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: transparent; /* Semi-transparent white background */
+            border-radius: 5px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        form button {
+            background-color: #ff4081;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        form a {
+            color: #ff4081;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: #fff;">Elawad Dating App</h1>
+    </header>
+
+    <nav>
+        {% if request.user.is_authenticated %}
+            <p style="color: #fff;">Welcome, {{ request.user.username }}!</p>
+            <a href="{% url 'logout' %}" style="color: #fff;">Logout</a>
+        {% else %}
+            <a href="{% url 'home' %}" style="color: #fff;">Welcome page</a>
+            <a href="{% url 'signup' %}" style="color: #fff;">Signup</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+            <a href="{% url 'signup' %}">Don't have an account? Create one</a>
+        </form>
+    </div>
+
+    <footer>
+        <p style="color: #fff;">&copy; 2023 Elawad Dating App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

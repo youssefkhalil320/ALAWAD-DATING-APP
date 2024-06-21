@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elawad - Dating App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+            background-image: url("{% static 'images/logo2.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ff4081;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Calculate the height based on the viewport height, subtracting header and nav bar heights */
+        body {
+            height: calc(100vh - 60px - 60px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: #fff;">Elawad Dating App</h1>
+    </header>
+
+    <nav>
+        {% if request.user.is_authenticated %}
+            <p style="color: #fff;">Welcome, {{ request.user.username }}!</p>
+            <a href="{% url 'logout' %}" style="color: #fff;">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}" style="color: #fff;">Login</a>
+            <a href="{% url 'signup' %}" style="color: #fff;">Signup</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to Elawad Dating App</h1>
+        <!-- Add your app content here -->
+    </div>
+
+    <footer>
+        <p style="color: #fff;">&copy; 2023 Elawad Dating App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
