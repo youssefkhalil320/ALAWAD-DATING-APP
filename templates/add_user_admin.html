@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elawad - Dating App</title>
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #333;
+        background-image: url("{% static 'images/logo2.jpeg' %}");
+        background-size: 100% 100%; /* Updated to cover the entire height and width */
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        }
+
+        header {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ff4081;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #ff80ab;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Calculate the height based on the viewport height, subtracting header and nav bar heights */
+        body {
+            height: calc(100vh - 60px - 60px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* New style for the welcome message */
+        .welcome-message {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: scroll;
+        }
+
+        .Btn
+        {
+            justify-self: center;
+            width: 100%;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ff4081;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d33866;
+        }
+
+        .hobbies-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    }
+
+    .hobbies-checkboxes input {
+        display: none; /* Hide the default checkboxes */
+    }
+
+    .hobbies-checkboxes label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .hobbies-checkboxes label:hover {
+        background-color: #f5f5f5;
+    }
+
+    .hobbies-checkboxes input:checked + label {
+        background-color: #ff4081;
+        color: #fff;
+    }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: #fff;">Elawad Dating App</h1>
+        {% if user_name %}
+            <div class="welcome-message">Welcome, {{ user_name }}! <a href="{% url 'login' %}" style="color: #fff;">Logout</a></div>
+        {% endif %}
+    </header>
+
+    <nav>
+        {% if user_name %}
+            <!-- Show logout link if the user is logged in -->
+            <a href="{% url 'profile_admin' user_name=user_name%}" style="color: #fff;">My Profile</a>
+        {% else %}
+            <!-- Your existing login and signup links -->
+            <a href="{% url 'login' %}" style="color: #fff;">Login</a>
+            <a href="{% url 'signup' %}" style="color: #fff;">Signup</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to Elawad Dating App</h1>
+        {% if user_name %}
+            <form method="post" action="{% url 'add_user_admin' user_name=user_name%}">
+                {% csrf_token %}
+                <label for="user_name">user name:</label>
+                <input type="text" id="user_name" name="user_name" required>
+
+                <label for="pwd">password:</label>
+                <input type="password" id="pwd" name="pwd" required>
+
+                <label for="role">role:</label>
+                <select class="role" id="role" name="role">
+                    <option value="" selected="selected" disabled="disabled">-- select one --</option>
+                    <option value="subscriber">subscriber</option>
+                    <option value="hr">hr</option>
+                    <option value="admin">admin</option>
+                  </select>
+                
+                <button type="submit">Add user</button>
+            </form>
+        {% endif %}
+        <!-- Add your app content here -->
+    </div>
+    <div id="footer">
+        <footer>
+            <p style="color: #fff;">&copy; 2023 Elawad Dating App. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
